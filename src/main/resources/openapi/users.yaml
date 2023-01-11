@@ -1,0 +1,60 @@
+---
+openapi: "3.0.0"
+info:
+  title: "ReqRes API"
+  description: "Fake data CRUD API"
+  version: "1"
+servers:
+  - url: "https://reqres.in/api"
+components:
+  schemas:
+    User:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+        email:
+          type: "string"
+        first_name:
+          type: "string"
+        last_name:
+          type: "string"
+        avatar:
+          type: "string"
+    UsersResponse:
+      type: "object"
+      properties:
+        page:
+          type: "integer"
+        per_page:
+          type: "integer"
+        total:
+          type: "integer"
+        total_pages:
+          type: "integer"
+        data:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/User"
+paths:
+  /users:
+    get:
+      summary: "Fetches a user list"
+      tags:
+        - Users
+      parameters:
+        - in: "query"
+          name: "page"
+          schema:
+            type: "integer"
+        - in: "query"
+          name: "per_page"
+          schema:
+            type: "integer"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsersResponse'
